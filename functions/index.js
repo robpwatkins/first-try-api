@@ -11,7 +11,7 @@ admin.initializeApp({
 const db = admin.firestore();
 
 app.get('/ping', (req, res) => {
-  return res.status(200).send('pong!');s
+  return res.status(200).send('pong!');
 });
 
 app.get('/api/read/:item_id', (req, res) => {
