@@ -14,11 +14,25 @@ app.get('/ping', (req, res) => {
   return res.status(200).send('pong!');s
 });
 
+app.get('/api/read/:item_id', (req, res) => {
+  (async () => {
+    try {
+      const document = db.collection('items').doc(req.params.item_id);
+      let item = await document.get();
+      let response = item.data();
+      return res.status(200).send(response);
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 app.post('/api/create', (req, res) => {
   (async () => {
     try {
       await db.collection('items').doc('/' + req.body.id + '/').create({item: req.body.item});
-      console.log('here:', db.collection('items'));
+      console.log('here:', db.collection('items').doc());
       return res.status(200).send();
     } catch (error) {
       console.log(error);
