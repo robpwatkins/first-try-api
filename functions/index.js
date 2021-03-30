@@ -66,6 +66,19 @@ app.put('/api/update/:item_id', (req, res) => {
   })();
 });
 
+app.delete('/api/delete/:item_id', (req, res) => {
+  (async () => {
+    try {
+      const document = db.collection('items').doc(req.params.item_id);
+      await document.delete();
+      return res.status(200).send();
+    } catch (error) {
+      console.log(error);
+      return res.status(500).send(error);
+    }
+  })();
+});
+
 app.post('/api/create', (req, res) => {
   (async () => {
     try {
